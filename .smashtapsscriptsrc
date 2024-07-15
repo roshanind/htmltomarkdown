@@ -1,0 +1,69 @@
+{
+  "eslint": {
+    "enabled": true,
+    "install": {
+      "devDependencies": true,
+      "scripts": true,
+      "files": true
+    },
+    "features": {
+      "typescript": true,
+      "react": true,
+      "promise": true,
+      "import": true,
+      "spellcheck": true
+    },
+    "installed": true
+  },
+  "prettier": {
+    "enabled": true,
+    "install": {
+      "devDependencies": true,
+      "scripts": true,
+      "files": true
+    },
+    "installed": true
+  },
+  "husky": {
+    "enabled": true,
+    "install": {
+      "devDependencies": true,
+      "scripts": true,
+      "files": true
+    },
+    "installed": true
+  },
+  "lint-staged": {
+    "enabled": true,
+    "install": {
+      "devDependencies": true,
+      "files": true
+    },
+    "installed": true
+  },
+  "commitlint": {
+    "enabled": true,
+    "install": {
+      "devDependencies": true,
+      "files": true
+    },
+    "installed": true
+  },
+  "commitizen": {
+    "enabled": true,
+    "install": {
+      "devDependencies": true,
+      "scripts": true,
+      "files": true
+    },
+    "installed": true
+  },
+  "git": {
+    "enabled": true,
+    "install": {
+      "files": true,
+      "scripts": true
+    },
+    "installed": true
+  }
+}
