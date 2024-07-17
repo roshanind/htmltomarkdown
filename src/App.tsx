@@ -7,6 +7,7 @@ import FileList from '@globals/FileList';
 import { StoreProvider } from '@store';
 import MDViewer from '@globals/MDViewer';
 import ExportButton from '@globals/ExportButton';
+import AutoSave from '@globals/AutoSave';
 
 const defaultStyles = (
   <GlobalStyles
@@ -43,10 +44,12 @@ function App() {
             <Grid item xs sx={{ flexGrow: { xs: 0 } }}>
               <Paper sx={{ p: 1 }} elevation={3}>
                 <Grid container justifyContent="space-between">
-                  <Grid item xs>
+                  <Grid item xs display="flex" alignItems="center" columnGap={2}>
                     <FileUploader />
+                    <AutoSave />
+                    {/* <SavingProgress isShow /> */}
                   </Grid>
-                  <Grid item xs flexGrow={{ xs: 0 }}>
+                  <Grid item xs flexGrow={{ xs: 0 }} display="flex" alignItems="center" columnGap={2}>
                     <ExportButton />
                   </Grid>
                 </Grid>

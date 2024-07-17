@@ -1,4 +1,6 @@
 export const ADD_FILES = 'ADD_FILES';
 export const DELETE_FILE = 'DELETE_FILE';
 export const UPDATE_FILE = 'UPDATE_FILE';
+
+export const LOAD_FROM_LOCAL_STORAGE = 'LOAD_FROM_LOCAL_STORAGE';
 export const SET_VIEWING_FILE = 'SET_VIEWING_FILE';

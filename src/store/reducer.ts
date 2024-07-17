@@ -44,6 +44,12 @@ function reducer(state: State, action: Action): State {
         viewingFile: action.payload,
       };
     }
+    case actionTypes.LOAD_FROM_LOCAL_STORAGE: {
+      return {
+        ...state,
+        files: action.payload,
+      };
+    }
     default:
       console.log('Unknown action type:', action);
       return state;

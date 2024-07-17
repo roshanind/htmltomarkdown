@@ -35,7 +35,7 @@ export default function MDViewer({}: Props) {
   const { files, viewingFile, dispatch } = useStore();
   const mdEditor = useRef<MDXEditorMethods>(null);
   const content = useMemo(() => {
-    const file = files.find((file) => file.name === viewingFile);
+    const file = files.find((file) => file.name === viewingFile?.name);
     return file?.content || '';
   }, [files, viewingFile]);
 
@@ -51,7 +51,7 @@ export default function MDViewer({}: Props) {
         onChange={(content) => {
           if (!viewingFile) return;
 
-          dispatch.updateContent({ name: viewingFile, content });
+          dispatch.updateContent({ ...viewingFile, content });
         }}
         // onError={(error) => console.error(error)}
         plugins={[

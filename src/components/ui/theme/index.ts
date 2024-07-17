@@ -16,7 +16,7 @@ export const theme = createTheme({
   colors,
   palette: colors as PaletteOptions,
   typography: {
-    htmlFontSize: 16,
+    htmlFontSize: 17.7, // base / default font size is 17.7px. 14px in rem is 0.9rem so 16/17.7 = 0.9
   },
   components: {
     MuiButton: {

@@ -3,7 +3,7 @@ import { FileContent } from './files.types';
 
 export type State = {
   files: FileContent[];
-  viewingFile: string | null;
+  viewingFile: FileContent | null;
 };
 
 export type Action =
@@ -12,14 +12,18 @@ export type Action =
       payload: FileContent;
     }
   | {
-      type: typeof actionTypes.SET_VIEWING_FILE;
-      payload: string;
-    }
-  | {
       type: typeof actionTypes.DELETE_FILE;
       payload: string;
     }
   | {
       type: typeof actionTypes.UPDATE_FILE;
       payload: FileContent;
+    }
+  | {
+      type: typeof actionTypes.SET_VIEWING_FILE;
+      payload: FileContent | null;
+    }
+  | {
+      type: typeof actionTypes.LOAD_FROM_LOCAL_STORAGE;
+      payload: FileContent[];
     };

@@ -10,11 +10,12 @@ import {
   useTheme,
 } from '@mui/material';
 import { useStore } from '@store';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PreviewIcon from '@mui/icons-material/Preview';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FileViewAndModify from './FileViewAndModify';
 import { FileContent } from '@type/files.types';
+import { useLocalStorage } from 'src/hooks/useLocalStorage';
 
 type Props = {};
 
@@ -23,6 +24,11 @@ export default function FileList({}: Props) {
   const { files, dispatch } = useStore();
   const [previewingFile, setPreviewingFile] = useState<FileContent | null>(null);
   const [isSelected, setIsSelected] = useState<string | null>(null);
+  const [savedFiles] = useLocalStorage('files', []);
+
+  useEffect(() => {
+    dispatch.loadFromLocalStorage(savedFiles);
+  }, []);
 
   const handleOnPreviewClick = (file: FileContent) => () => {
     setPreviewingFile(file);
@@ -58,7 +64,7 @@ export default function FileList({}: Props) {
               selected={isSelected === file.name}
               onClick={() => {
                 setIsSelected(file.name);
-                dispatch.setViewingFile(file.name);
+                dispatch.setViewingFile(file);
               }}
             >
               <ListItemText

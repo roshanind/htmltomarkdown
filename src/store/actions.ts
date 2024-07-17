@@ -19,9 +19,14 @@ export const actionsFactory = (dispatch: Dispatch<Action>) => ({
       type: actionTypes.DELETE_FILE,
       payload: fileName,
     }),
-  setViewingFile: (fileName: string) =>
+  setViewingFile: (file: FileContent) =>
     dispatch({
       type: actionTypes.SET_VIEWING_FILE,
-      payload: fileName,
+      payload: file,
+    }),
+  loadFromLocalStorage: (files: FileContent[]) =>
+    dispatch({
+      type: actionTypes.LOAD_FROM_LOCAL_STORAGE,
+      payload: files,
     }),
 });
