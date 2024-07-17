@@ -9,7 +9,7 @@ export default function AutoSave() {
   const { files } = useStore();
   const [isAutoSave, setAutoSave] = useLocalStorage<boolean>('autoSave', false);
   const [_, setSavedFiles] = useLocalStorage('files', files);
-  const { scheduleJob, jobId, updateJob, stopScheduler, restartScheduler } = useScheduler(10000);
+  const { scheduleJob, jobId, updateJob, stopScheduler, restartScheduler } = useScheduler(60000);
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {

@@ -7,7 +7,7 @@ type Props = {
   onEnd?: () => void;
 };
 
-export default function SavingProgress({ isShow, interval = 5000, onEnd }: Props) {
+export default function SavingProgress({ isShow, interval = 3000, onEnd }: Props) {
   const [showProgress, setShowProgress] = useState(isShow);
 
   const timerRef = useRef<NodeJS.Timeout>();
