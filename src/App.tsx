@@ -56,13 +56,13 @@ function App() {
               </Paper>
             </Grid>
             <Grid item xs sx={{ minHeight: 0 }}>
-              <Grid container columnSpacing={2} sx={{ height: '100%' }}>
-                <Grid item xs={4}>
+              <Grid container columnSpacing={2} sx={{ height: '100%' }} flexWrap="nowrap">
+                <Grid item xs="auto" sx={{ width: { xs: 400 } }}>
                   <Paper sx={{ p: 2, height: '100%', overflowY: 'auto' }} elevation={3}>
                     <FileList />
                   </Paper>
                 </Grid>
-                <Grid item xs={8} height="100%">
+                <Grid item xs height="100%" minWidth={0}>
                   <Paper sx={{ p: 2, height: '100%', overflowY: 'auto' }} elevation={3}>
                     <MDViewer />
                   </Paper>
