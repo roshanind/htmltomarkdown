@@ -7,9 +7,10 @@ module.exports = {
     },
   },
   rules: {
-    'jira-ticket': [2, 'always'],
-    'subject-empty': [2, 'never'],
-    'subject-good': [2, 'always'],
+    'type-empty': [0, 'always'],
+    'jira-ticket': [0, 'always'],
+    'subject-empty': [0, 'always'],
+    'subject-good': [0, 'always'],
   },
   plugins: [
     {

@@ -6,6 +6,7 @@ module.exports = custom({
   jiraAppend: ']',
   exclamationMark: true,
   jiraPrefix: 'GIT',
+  jiraOptional: true,
   types: {
     feat: {
       description: '✨ A new feature',
