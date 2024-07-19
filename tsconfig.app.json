@@ -13,7 +13,9 @@
       "@store/*": ["src/store/*"],
       "@type/*": ["src/types/*"],
       "@globals/*": ["src/components/globals/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@constants/*": ["src/constants/*"],
+      "@hooks/*": ["src/hooks/*"]
     },
     "baseUrl": "./",
     "typeRoots": ["node_modules/@types", "src/types"],

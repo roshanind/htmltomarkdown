@@ -19,10 +19,15 @@ export const actionsFactory = (dispatch: Dispatch<Action>) => ({
       type: actionTypes.DELETE_FILE,
       payload: fileName,
     }),
-  setViewingFile: (file: FileContent) =>
+  bulkUpdateFiles: (files: FileContent[]) =>
+    dispatch({
+      type: actionTypes.BULK_UPDATE_FILES,
+      payload: files,
+    }),
+  setViewingFile: (fileName: string) =>
     dispatch({
       type: actionTypes.SET_VIEWING_FILE,
-      payload: file,
+      payload: fileName,
     }),
   loadFromLocalStorage: (files: FileContent[]) =>
     dispatch({

@@ -1,6 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-export const useLocalStorage = <T>(key: string, initialValue: T) => {
+/**
+ * Custom hook for managing a value in local storage.
+ * @param key - The key to use for storing the value in local storage.
+ * @param initialValue - The initial value to use if no value is found in local storage.
+ * @returns A tuple containing the stored value and a function to update the stored value.
+ */
+export const useLocalStorage = <T>(
+  key: string,
+  initialValue: T
+): [storedValue: T, setStoredValue: (value: T) => void] => {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
       const item = window.localStorage.getItem(key);
@@ -11,6 +20,10 @@ export const useLocalStorage = <T>(key: string, initialValue: T) => {
     }
   });
 
+  /**
+   * Function to update the stored value and save it to local storage.
+   * @param value - The new value to set.
+   */
   const setValue = (value: T) => {
     try {
       setStoredValue(value);
@@ -20,19 +33,5 @@ export const useLocalStorage = <T>(key: string, initialValue: T) => {
     }
   };
 
-  useEffect(() => {
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === key) {
-        setStoredValue(event.newValue ? JSON.parse(event.newValue) : initialValue);
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, [key, initialValue]);
-
-  return [storedValue, setValue] as const;
+  return [storedValue, setValue];
 };

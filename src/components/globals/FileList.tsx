@@ -1,30 +1,37 @@
+import { useEffect, useState } from 'react';
 import {
-  Chip,
+  Avatar,
+  Badge,
+  Box,
   IconButton,
   List,
   ListItem,
+  ListItemAvatar,
   ListItemButton,
   ListItemText,
   Tooltip,
   Typography,
   useTheme,
 } from '@mui/material';
-import { useStore } from '@store';
-import { useEffect, useState } from 'react';
 import PreviewIcon from '@mui/icons-material/Preview';
 import DeleteIcon from '@mui/icons-material/Delete';
-import FileViewAndModify from './FileViewAndModify';
+
+import { useStore } from '@store';
 import { FileContent } from '@type/files.types';
-import { useLocalStorage } from 'src/hooks/useLocalStorage';
+import { FILE_SAVE_KEY } from '@constants/index';
+import { useLocalStorage } from '@hooks/useLocalStorage';
 
-type Props = {};
+import FileViewAndModify from './FileViewAndModify';
 
-export default function FileList({}: Props) {
+/**
+ * Renders a list of files with options to preview and delete.
+ * @returns The FileList component.
+ */
+export default function FileList() {
   const theme = useTheme();
   const { files, dispatch } = useStore();
   const [previewingFile, setPreviewingFile] = useState<FileContent | null>(null);
-  const [isSelected, setIsSelected] = useState<string | null>(null);
-  const [savedFiles] = useLocalStorage('files', []);
+  const [savedFiles] = useLocalStorage(FILE_SAVE_KEY, []);
 
   useEffect(() => {
     dispatch.loadFromLocalStorage(savedFiles);
@@ -46,42 +53,60 @@ export default function FileList({}: Props) {
             disablePadding
             key={file.name}
             secondaryAction={
-              <>
-                <Tooltip title="Preview" placement="right" arrow>
-                  <IconButton onClick={handleOnPreviewClick(file)}>
+              <Box display="flex" alignItems="center">
+                <Tooltip title="Preview" placement="top" arrow>
+                  <IconButton onClick={handleOnPreviewClick(file)} sx={{ p: 0.5 }}>
                     <PreviewIcon />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="Preview" placement="right" arrow>
-                  <IconButton onClick={() => dispatch.deleteFile(file.name)}>
+                <Tooltip title="Preview" placement="top" arrow>
+                  <IconButton onClick={() => dispatch.deleteFile(file.name)} sx={{ p: 0.5 }}>
                     <DeleteIcon />
                   </IconButton>
                 </Tooltip>
-              </>
+              </Box>
             }
           >
             <ListItemButton
-              selected={isSelected === file.name}
+              selected={file.isViewing}
               onClick={() => {
-                setIsSelected(file.name);
-                dispatch.setViewingFile(file);
+                dispatch.setViewingFile(file.name);
               }}
             >
+              <ListItemAvatar sx={{ minWidth: 0, mr: 1 }}>
+                <Avatar
+                  sx={{
+                    bgcolor:
+                      file.fileExtension === 'md' ? theme.palette.secondary.main : theme.palette.secondary['100'],
+                    width: 24,
+                    height: 24,
+                    fontSize: '0.5rem',
+                    textTransform: 'uppercase',
+                    fontWeight: 'bold',
+                    pt: '2px',
+                  }}
+                  variant="rounded"
+                >
+                  {file.fileExtension}
+                </Avatar>
+              </ListItemAvatar>
+
               <ListItemText
                 primary={
                   <>
-                    {file.name}
-                    <Chip
-                      variant="tag"
-                      label={file.fileExtension}
-                      size="small"
-                      sx={{
-                        ml: 1,
-                        backgroundColor:
-                          file.fileExtension === 'md' ? theme.palette.secondary.main : theme.palette.secondary['100'],
-                        color: theme.palette.primary.contrastText,
+                    <Badge
+                      invisible={!file.modified}
+                      color="secondary"
+                      variant="dot"
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
                       }}
-                    />
+                    >
+                      <Typography variant="body1" fontWeight={700}>
+                        {file.name}
+                      </Typography>
+                    </Badge>
                   </>
                 }
               />

@@ -3,4 +3,7 @@ export type FileContent = {
   content: string;
   fileExtension?: string;
   originalContent?: string;
+  lastEditedContent?: string;
+  modified?: boolean;
+  isViewing?: boolean;
 };

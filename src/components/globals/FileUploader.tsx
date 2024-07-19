@@ -1,16 +1,20 @@
 import TurndownService from 'turndown';
+import { Stack } from '@mui/material';
 
 import { useStore } from '@store/index';
-import FileUploadButton from '@ui/FileUploadButton';
 import { FileContent } from '@type/files.types';
-import FileViewAndModify from './FileViewAndModify';
-import { Stack } from '@mui/material';
 import customRules from '@utils/turndownCustomRules';
+import FileUploadButton from '@ui/FileUploadButton';
+
+import FileViewAndModify from './FileViewAndModify';
 
 const turndownService = new TurndownService();
 turndownService.remove('script');
 turndownService.use(customRules);
 
+/**
+ * Component for uploading and handling files.
+ */
 export const FileUploader = () => {
   const { dispatch } = useStore();
 
@@ -31,6 +35,8 @@ export const FileUploader = () => {
         fileExtension,
         originalContent: fileContent,
         content: markdown || fileContent,
+        modified: true,
+        isViewing: true,
       });
     }
   };

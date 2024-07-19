@@ -3,7 +3,6 @@ import { FileContent } from './files.types';
 
 export type State = {
   files: FileContent[];
-  viewingFile: FileContent | null;
 };
 
 export type Action =
@@ -21,9 +20,13 @@ export type Action =
     }
   | {
       type: typeof actionTypes.SET_VIEWING_FILE;
-      payload: FileContent | null;
+      payload: string | null;
     }
   | {
       type: typeof actionTypes.LOAD_FROM_LOCAL_STORAGE;
+      payload: FileContent[];
+    }
+  | {
+      type: typeof actionTypes.BULK_UPDATE_FILES;
       payload: FileContent[];
     };

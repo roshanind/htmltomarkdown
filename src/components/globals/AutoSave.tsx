@@ -1,30 +1,40 @@
-import { FormControlLabel, Switch } from '@mui/material';
-import { useStore } from '@store';
 import { useEffect, useState } from 'react';
-import { useLocalStorage } from 'src/hooks/useLocalStorage';
-import { useScheduler } from 'src/hooks/useScheduler';
+import { FormControlLabel, Switch } from '@mui/material';
+
+import { useStore } from '@store';
+import { AUTO_SAVE_CHECK_INTERVAL, AUTO_SAVE_KEY } from '@constants/index';
+import { useLocalStorage } from '@hooks/useLocalStorage';
+import { useScheduler } from '@hooks/useScheduler';
+import { useSaveFile } from '@hooks/useSaveFile';
+
 import SavingProgress from './SavingProgress';
 
+/**
+ * AutoSave component handles automatic saving of files.
+ * It provides a switch to enable/disable auto-saving functionality.
+ *
+ * @returns JSX.Element
+ */
 export default function AutoSave() {
   const { files } = useStore();
-  const [isAutoSave, setAutoSave] = useLocalStorage<boolean>('autoSave', false);
-  const [_, setSavedFiles] = useLocalStorage('files', files);
-  const { scheduleJob, jobId, updateJob, stopScheduler, restartScheduler } = useScheduler(60000);
+  const [isAutoSave, setAutoSave] = useLocalStorage<boolean>(AUTO_SAVE_KEY, false);
+  const { saveAllFiles } = useSaveFile();
+  const { scheduleJob, jobId, updateJob, stopScheduler, restartScheduler } = useScheduler(AUTO_SAVE_CHECK_INTERVAL);
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (isAutoSave && !jobId) {
       scheduleJob(() => {
         setIsSaving(true);
-        setSavedFiles(files);
+        saveAllFiles(files);
       });
     }
-  }, [isAutoSave, files, jobId, scheduleJob, setSavedFiles]);
+  }, [isAutoSave, files, jobId, scheduleJob, saveAllFiles]);
 
   useEffect(() => {
     updateJob(() => {
       setIsSaving(true);
-      setSavedFiles(files);
+      saveAllFiles(files);
     });
   }, [files]);
 

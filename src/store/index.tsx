@@ -11,6 +11,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     ...state,
     dispatch: actionsFactory(dispatch),
   };
+
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
 };
 

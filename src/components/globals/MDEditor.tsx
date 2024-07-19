@@ -1,5 +1,6 @@
-import { useStore } from '@store';
+import { useEffect, useMemo, useRef } from 'react';
 import {
+  // plugins
   MDXEditor,
   headingsPlugin,
   quotePlugin,
@@ -10,6 +11,11 @@ import {
   imagePlugin,
   tablePlugin,
   toolbarPlugin,
+  diffSourcePlugin,
+  markdownShortcutPlugin,
+  codeBlockPlugin,
+  codeMirrorPlugin,
+  // components
   UndoRedo,
   BoldItalicUnderlineToggles,
   BlockTypeSelect,
@@ -18,36 +24,35 @@ import {
   InsertTable,
   InsertThematicBreak,
   ListsToggle,
-  markdownShortcutPlugin,
-  codeBlockPlugin,
   InsertCodeBlock,
-  codeMirrorPlugin,
-  // ChangeCodeMirrorLanguage,
   MDXEditorMethods,
+  DiffSourceToggleWrapper,
 } from '@mdxeditor/editor';
-import { useEffect, useMemo, useRef } from 'react';
+
+import { useStore } from '@store';
 
 import '@mdxeditor/editor/style.css';
 
-type Props = {};
-
-export default function MDViewer({}: Props) {
-  const { files, viewingFile, dispatch } = useStore();
+/**
+ * Markdown Editor component.
+ * Renders a markdown editor with various plugins and toolbar options.
+ */
+export default function MDEditor() {
+  const { files, dispatch } = useStore();
   const mdEditor = useRef<MDXEditorMethods>(null);
-  const content = useMemo(() => {
-    const file = files.find((file) => file.name === viewingFile?.name);
-    return file?.content || '';
-  }, [files, viewingFile]);
+  const viewingFile = useMemo(() => {
+    return files.find((file) => file.isViewing);
+  }, [files]);
 
   useEffect(() => {
-    mdEditor.current?.setMarkdown(content);
-  }, [content]);
+    mdEditor.current?.setMarkdown(viewingFile?.content || '');
+  }, [viewingFile]);
 
   return (
     <div className="container">
       <MDXEditor
         ref={mdEditor}
-        markdown={content}
+        markdown={viewingFile?.content || ''}
         onChange={(content) => {
           if (!viewingFile) return;
 
@@ -66,6 +71,10 @@ export default function MDViewer({}: Props) {
           markdownShortcutPlugin(),
           codeBlockPlugin({ defaultCodeBlockLanguage: 'txt' }),
           codeMirrorPlugin({ codeBlockLanguages: { txt: 'Bash', js: 'JavaScript', css: 'CSS', '': 'Bash' } }),
+          diffSourcePlugin({
+            diffMarkdown: viewingFile?.lastEditedContent || viewingFile?.content,
+            viewMode: 'diff',
+          }),
           toolbarPlugin({
             toolbarContents: () => (
               <>
@@ -79,6 +88,9 @@ export default function MDViewer({}: Props) {
                 <ListsToggle />
                 <BoldItalicUnderlineToggles />
                 <InsertCodeBlock />
+                <DiffSourceToggleWrapper>
+                  <UndoRedo />
+                </DiffSourceToggleWrapper>
               </>
             ),
           }),

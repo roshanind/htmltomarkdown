@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   Button,
   Dialog,
@@ -9,8 +10,8 @@ import {
   TextField,
 } from '@mui/material';
 import EditNoteIcon from '@mui/icons-material/EditNote';
+
 import { FileContent } from '@type/files.types';
-import { useEffect, useState } from 'react';
 
 type Props = {
   isShow?: boolean;
@@ -20,6 +21,17 @@ type Props = {
   onCancel?: () => void;
 };
 
+/**
+ * Renders a component for viewing and modifying a file.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.isShow - Flag indicating whether to show the file view and modify component.
+ * @param {Function} props.onCreate - Function to be called when creating a new file.
+ * @param {Object} props.content - The content of the file.
+ * @param {boolean} props.isCreatable - Flag indicating whether the file is creatable.
+ * @param {Function} props.onCancel - Function to be called when canceling the file creation.
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function FileViewAndModify({ isShow = false, onCreate, content, isCreatable, onCancel }: Props) {
   const [isShowPreview, setIsShow] = useState(isShow);
   const [fileContent, setFileContent] = useState<FileContent>({

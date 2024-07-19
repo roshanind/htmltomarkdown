@@ -1,5 +1,5 @@
-import { Box, CircularProgress } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
+import { Box, CircularProgress } from '@mui/material';
 
 type Props = {
   isShow: boolean;
@@ -7,6 +7,15 @@ type Props = {
   onEnd?: () => void;
 };
 
+/**
+ * Renders a saving progress indicator.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.isShow - Determines whether to show the progress indicator.
+ * @param {number} [props.interval=3000] - The interval in milliseconds after which the progress indicator should be hidden.
+ * @param {Function} props.onEnd - The callback function to be called when the progress indicator ends.
+ * @returns {JSX.Element} The saving progress component.
+ */
 export default function SavingProgress({ isShow, interval = 3000, onEnd }: Props) {
   const [showProgress, setShowProgress] = useState(isShow);
 

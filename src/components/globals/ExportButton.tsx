@@ -1,11 +1,15 @@
 import { Button } from '@mui/material';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+
 import { useStore } from '@store';
 import { changeExtension } from '@utils/changeExtension';
 
-type Props = {};
-
-export default function ExportButton({}: Props) {
+/**
+ * ExportButton component exports all files as markdown files.
+ *
+ * @returns JSX.Element
+ */
+export default function ExportButton() {
   const { files } = useStore();
 
   const handleOnExport = () => {

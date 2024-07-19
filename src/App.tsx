@@ -5,9 +5,10 @@ import { theme } from '@ui/theme';
 import FileUploader from '@globals/FileUploader';
 import FileList from '@globals/FileList';
 import { StoreProvider } from '@store';
-import MDViewer from '@globals/MDViewer';
+import MDEditor from '@globals/MDEditor';
 import ExportButton from '@globals/ExportButton';
 import AutoSave from '@globals/AutoSave';
+import SaveButton from '@globals/SaveButton';
 
 const defaultStyles = (
   <GlobalStyles
@@ -49,7 +50,17 @@ function App() {
                     <AutoSave />
                     {/* <SavingProgress isShow /> */}
                   </Grid>
-                  <Grid item xs flexGrow={{ xs: 0 }} display="flex" alignItems="center" columnGap={2}>
+                  <Grid
+                    item
+                    xs
+                    flexGrow={{ xs: 1 }}
+                    display="flex"
+                    justifyContent="flex-end"
+                    alignItems="center"
+                    columnGap={2}
+                  >
+                    <SaveButton />
+                    <SaveButton isSaveAll />
                     <ExportButton />
                   </Grid>
                 </Grid>
@@ -64,7 +75,7 @@ function App() {
                 </Grid>
                 <Grid item xs height="100%" minWidth={0}>
                   <Paper sx={{ p: 2, height: '100%', overflowY: 'auto' }} elevation={3}>
-                    <MDViewer />
+                    <MDEditor />
                   </Paper>
                 </Grid>
               </Grid>

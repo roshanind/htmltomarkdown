@@ -1,11 +1,17 @@
+import { FileContent } from '@type/files.types';
 import { Action, State } from '../types/store.types';
 import * as actionTypes from './actionTypes';
 
 export const initialState: State = {
   files: [],
-  viewingFile: null,
 };
 
+/**
+ * Reducer function that handles state updates based on dispatched actions.
+ * @param state - The current state.
+ * @param action - The dispatched action.
+ * @returns The updated state.
+ */
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case actionTypes.ADD_FILES: {
@@ -27,9 +33,20 @@ function reducer(state: State, action: Action): State {
       };
     }
     case actionTypes.UPDATE_FILE: {
+      const { files } = state;
+      const currentFileIndex = files.findIndex((file) => file.name === action.payload.name);
+      const currentFile = files[currentFileIndex];
+
+      const updatedFile: FileContent = {
+        ...currentFile,
+        lastEditedContent: currentFile.content,
+        content: action.payload.content,
+        modified: currentFile.content !== action.payload.content,
+      };
+
       return {
         ...state,
-        files: state.files.map((file) => (file.name === action.payload.name ? action.payload : file)),
+        files: [...files.slice(0, currentFileIndex), updatedFile, ...files.slice(currentFileIndex + 1)],
       };
     }
     case actionTypes.DELETE_FILE: {
@@ -38,10 +55,30 @@ function reducer(state: State, action: Action): State {
         files: state.files.filter((file) => file.name !== action.payload),
       };
     }
+    case actionTypes.BULK_UPDATE_FILES: {
+      return {
+        ...state,
+        files: action.payload,
+      };
+    }
     case actionTypes.SET_VIEWING_FILE: {
       return {
         ...state,
-        viewingFile: action.payload,
+        files: state.files.map((file) => {
+          if (file.name === action.payload) {
+            return {
+              ...file,
+              isViewing: true,
+            };
+          } else if (file.isViewing) {
+            return {
+              ...file,
+              isViewing: false,
+            };
+          }
+
+          return file;
+        }),
       };
     }
     case actionTypes.LOAD_FROM_LOCAL_STORAGE: {
