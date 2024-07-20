@@ -1,7 +1,9 @@
 import { createTheme, PaletteOptions } from '@mui/material';
+import { grey, common, yellow } from '@mui/material/colors';
 
 export const colors = {
   primary: {
+    light: '#e0f2f1',
     main: '#26a69a',
     dark: '#00897b',
     darker: '#004d40',
@@ -10,12 +12,16 @@ export const colors = {
     main: '#2979ff',
     100: '#ff7043',
   },
+  grey,
+  common,
+  yellow,
 };
 
 export const theme = createTheme({
   colors,
   palette: colors as PaletteOptions,
   typography: {
+    fontFamily: 'Urbanist, sans-serif',
     htmlFontSize: 17.7, // base / default font size is 17.7px. 14px in rem is 0.9rem so 16/17.7 = 0.9
   },
   components: {
@@ -84,6 +90,16 @@ export const theme = createTheme({
         },
       ],
     },
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          borderBottom: `1px solid ${colors.grey[100]}`,
+          '&:last-child': {
+            borderBottom: 'none',
+          },
+        },
+      },
+    },
     MuiListItemButton: {
       defaultProps: {
         disableRipple: true,
@@ -91,6 +107,17 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 24,
+          '&.Mui-selected': {
+            backgroundColor: colors.primary.dark,
+            color: colors.common.white,
+            '&:hover': {
+              backgroundColor: colors.primary.darker,
+            },
+            '& + .MuiListItemSecondaryAction-root .MuiSvgIcon-root': {
+              color: colors.common.white,
+            },
+          },
+          transition: 'background-color 0.3s',
         },
       },
     },

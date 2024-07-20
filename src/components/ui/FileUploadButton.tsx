@@ -1,7 +1,7 @@
+import { ChangeEvent } from 'react';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import UploadIcon from '@mui/icons-material/Upload';
-import { ChangeEvent, useCallback, useState } from 'react';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -20,30 +20,13 @@ type Props = {
 };
 
 export default function FileUploadButton({ onChange }: Props) {
-  const [files, setFiles] = useState<File[]>([]);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
 
-  const handleChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const { files: rawFiles } = e.target;
-
-      // check file name exists and if exists update file in state or add new files to state
-      if (rawFiles?.length) {
-        const newFiles = Array.from(rawFiles);
-
-        const updatedFiles = newFiles.reduce((acc, file) => {
-          const fileExists = files.some((prevFile) => prevFile.name === file.name);
-          if (fileExists) {
-            return acc.concat(files.map((prevFile) => (prevFile.name === file.name ? file : prevFile)));
-          }
-          return acc.concat(file);
-        }, [] as File[]);
-
-        setFiles(updatedFiles);
-        onChange?.(updatedFiles);
-      }
-    },
-    [files]
-  );
+    if (files?.length) {
+      onChange?.(Array.from(files));
+    }
+  };
 
   return (
     <>

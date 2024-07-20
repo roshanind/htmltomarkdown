@@ -53,6 +53,7 @@ export default function MDEditor() {
       <MDXEditor
         ref={mdEditor}
         markdown={viewingFile?.content || ''}
+        autoFocus
         onChange={(content) => {
           if (!viewingFile) return;
 
@@ -73,7 +74,7 @@ export default function MDEditor() {
           codeMirrorPlugin({ codeBlockLanguages: { txt: 'Bash', js: 'JavaScript', css: 'CSS', '': 'Bash' } }),
           diffSourcePlugin({
             diffMarkdown: viewingFile?.lastEditedContent || viewingFile?.content,
-            viewMode: 'diff',
+            viewMode: 'rich-text',
           }),
           toolbarPlugin({
             toolbarContents: () => (
