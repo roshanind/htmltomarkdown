@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import UploadIcon from '@mui/icons-material/Upload';
+import { ImportIcon } from './icons/ImportIcon';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -29,11 +29,9 @@ export default function FileUploadButton({ onChange }: Props) {
   };
 
   return (
-    <>
-      <Button component="label" role={undefined} color="secondary" tabIndex={-1} startIcon={<UploadIcon />}>
-        Upload file
-        <VisuallyHiddenInput type="file" onChange={handleChange} multiple accept=".txt, .md" />
-      </Button>
-    </>
+    <Button component="label" role={undefined} color="secondary" tabIndex={-1} startIcon={<ImportIcon />}>
+      Import
+      <VisuallyHiddenInput type="file" onChange={handleChange} multiple accept=".txt, .md" />
+    </Button>
   );
 }

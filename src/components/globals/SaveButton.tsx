@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import { Button } from '@mui/material';
-import SaveIcon from '@mui/icons-material/Save';
-import SaveAltIcon from '@mui/icons-material/SaveAlt';
 
 import { useStore } from '@store';
 import { useSaveFile } from '@hooks/useSaveFile';
+import { SaveIcon } from '@ui/icons/SaveIcon';
+import { SaveAllIcon } from '@ui/icons/SaveAllIcon';
 
 type Props = {
   isSaveAll?: boolean;
@@ -40,7 +40,7 @@ export default function SaveButton({ isSaveAll }: Props) {
   };
 
   return isSaveAll ? (
-    <Button disabled={!files.length || !isEnableAllFilesSave} onClick={handleOnSaveAll} startIcon={<SaveAltIcon />}>
+    <Button disabled={!files.length || !isEnableAllFilesSave} onClick={handleOnSaveAll} startIcon={<SaveAllIcon />}>
       Save All
     </Button>
   ) : (

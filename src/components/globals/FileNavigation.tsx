@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Typography } from '@mui/material';
 
 import { useStore } from '@store';
 import { FileContent } from '@type/files.types';
@@ -41,9 +40,6 @@ export default function FileNavigation() {
 
   return (
     <>
-      <Typography variant="contained-heading" mb={2}>
-        File List
-      </Typography>
       <FileList<FileContent>
         files={files}
         isShowDelete

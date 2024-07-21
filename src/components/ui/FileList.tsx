@@ -14,8 +14,8 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import PreviewIcon from '@mui/icons-material/Preview';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { PreviewIcon } from './icons/PreviewIcon';
+import { DeleteIcon } from './icons/DeleteIcon';
 
 interface IFile {
   name?: string;
@@ -55,14 +55,14 @@ export default function FileList<T extends IFile>({
             <Box display="flex" alignItems="center">
               {isShowPreview && (
                 <Tooltip title="Preview" placement="top" arrow>
-                  <IconButton onClick={() => onPreview?.(file)} sx={{ p: 0.5 }}>
+                  <IconButton color="primary" onClick={() => onPreview?.(file)} sx={{ p: 0.5 }}>
                     <PreviewIcon />
                   </IconButton>
                 </Tooltip>
               )}
               {isShowDelete && (
                 <Tooltip title="Delete" placement="top" arrow>
-                  <IconButton onClick={() => onDelete?.(file?.name)} sx={{ p: 0.5 }}>
+                  <IconButton color="primary" onClick={() => onDelete?.(file?.name)} sx={{ p: 0.5 }}>
                     <DeleteIcon />
                   </IconButton>
                 </Tooltip>

@@ -3,6 +3,7 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 import { useStore } from '@store';
 import { changeExtension } from '@utils/changeExtension';
+import { ExportIcon } from '@ui/icons/ExportIcon';
 
 /**
  * ExportButton component exports all files as markdown files.
@@ -25,7 +26,7 @@ export default function ExportButton() {
   };
 
   return (
-    <Button color="primary" startIcon={<FileDownloadIcon />} onClick={handleOnExport}>
+    <Button color="primary" startIcon={<ExportIcon />} onClick={handleOnExport}>
       Export
     </Button>
   );

@@ -32,6 +32,7 @@ import {
 import { useStore } from '@store';
 
 import '@mdxeditor/editor/style.css';
+import { styled } from '@mui/material';
 
 /**
  * Markdown Editor component.
@@ -49,7 +50,7 @@ export default function MDEditor() {
   }, [viewingFile]);
 
   return (
-    <div className="container">
+    <MDContainer>
       <MDXEditor
         ref={mdEditor}
         markdown={viewingFile?.content || ''}
@@ -97,6 +98,46 @@ export default function MDEditor() {
           }),
         ]}
       />
-    </div>
+    </MDContainer>
   );
 }
+
+const MDContainer = styled('div')(({ theme }) => ({
+  position: 'relative',
+  height: '100%',
+  '.mdxeditor': {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+    alignItems: 'flex-start',
+    background: '#cfd8dc',
+  },
+  '.mdxeditor-toolbar': {
+    position: 'relative',
+    overflow: 'hidden',
+    flexWrap: 'wrap',
+    flexShrink: 0,
+    width: '100%',
+    borderRadius: 0,
+    background: theme.palette.common.white,
+  },
+  '.mdxeditor-diff-source-wrapper': {
+    width: '100%',
+    overflow: 'auto',
+    flexGrow: 1,
+
+    padding: 32,
+  },
+  '.mdxeditor-rich-text-editor, .mdxeditor-diff-editor, .mdxeditor-source-editor': {
+    background: theme.palette.common.white,
+    borderRadius: 16,
+    overflow: 'hidden',
+    minHeight: '100%',
+
+    '& img': {
+      maxWidth: '100%',
+      height: 'auto',
+    },
+  },
+}));

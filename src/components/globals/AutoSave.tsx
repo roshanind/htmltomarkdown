@@ -59,6 +59,10 @@ export default function AutoSave() {
       <SavingProgress isShow={isSaving} onEnd={handleOnProgressEnd} />
       {!isSaving && (
         <FormControlLabel
+          sx={{
+            marginRight: 0,
+            color: (theme) => theme.palette.common.white,
+          }}
           control={
             <>
               <Switch size="small" checked={isAutoSave} onChange={handleOnAutoSaveEnable} />

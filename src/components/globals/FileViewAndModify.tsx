@@ -1,17 +1,8 @@
 import { useEffect, useState } from 'react';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Grid,
-  // TextareaAutosize,
-  TextField,
-} from '@mui/material';
-import EditNoteIcon from '@mui/icons-material/EditNote';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from '@mui/material';
 
 import { FileContent } from '@type/files.types';
+import { CreateIcon } from '@ui/icons/CreateIcon';
 
 type Props = {
   isShow?: boolean;
@@ -66,8 +57,8 @@ export default function FileViewAndModify({ isShow = false, onCreate, content, i
   return (
     <>
       {isCreatable && (
-        <Button onClick={() => setIsShow(true)} startIcon={<EditNoteIcon />} color="secondary">
-          Create New File
+        <Button onClick={() => setIsShow(true)} startIcon={<CreateIcon />} color="secondary">
+          Create
         </Button>
       )}
       <Dialog open={isShowPreview} maxWidth="lg" fullWidth>

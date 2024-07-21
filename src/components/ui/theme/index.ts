@@ -1,5 +1,5 @@
-import { createTheme, PaletteOptions } from '@mui/material';
-import { grey, common, yellow } from '@mui/material/colors';
+import { createTheme, PaletteOptions, alpha } from '@mui/material';
+import { grey, common, yellow, teal } from '@mui/material/colors';
 
 export const colors = {
   primary: {
@@ -15,6 +15,7 @@ export const colors = {
   grey,
   common,
   yellow,
+  teal,
 };
 
 export const theme = createTheme({
@@ -53,7 +54,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: 'capitalize',
-          borderRadius: 12,
+          borderRadius: 17,
           boxShadow: 'none',
           '&:hover': {
             boxShadow: 'none',
@@ -69,7 +70,7 @@ export const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          borderRadius: 16,
+          // borderRadius: 16,
         },
       },
     },
@@ -93,7 +94,7 @@ export const theme = createTheme({
     MuiListItem: {
       styleOverrides: {
         root: {
-          borderBottom: `1px solid ${colors.grey[100]}`,
+          borderBottom: `1px solid ${alpha(colors.teal[100], 0.5)}`,
           '&:last-child': {
             borderBottom: 'none',
           },
@@ -116,6 +117,9 @@ export const theme = createTheme({
             '& + .MuiListItemSecondaryAction-root .MuiSvgIcon-root': {
               color: colors.common.white,
             },
+          },
+          '&:hover': {
+            backgroundColor: colors.teal[100],
           },
           transition: 'background-color 0.3s',
         },

@@ -118,7 +118,7 @@ export const FileUploader = () => {
   };
 
   return (
-    <Stack direction="row" spacing={2}>
+    <Stack direction="row" spacing={1}>
       <FileUploadButton onChange={handleOnChange} />
       <Dialog open={!!files.length}>
         <DialogTitle>Upload File</DialogTitle>
