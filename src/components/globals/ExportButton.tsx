@@ -1,5 +1,4 @@
 import { Button } from '@mui/material';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 import { useStore } from '@store';
 import { changeExtension } from '@utils/changeExtension';
