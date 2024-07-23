@@ -13,6 +13,8 @@
       "@store/*": ["src/store/*"],
       "@type/*": ["src/types/*"],
       "@globals/*": ["src/components/globals/*"],
+      "@pages/*": ["src/components/pages/*"],
+      "@layouts/*": ["src/components/layouts/*"],
       "@utils/*": ["src/utils/*"],
       "@constants/*": ["src/constants/*"],
       "@hooks/*": ["src/hooks/*"]

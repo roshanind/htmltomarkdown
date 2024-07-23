@@ -4,6 +4,7 @@ import * as actionTypes from './actionTypes';
 
 export const initialState: State = {
   files: [],
+  viewingFile: null,
 };
 
 /**
@@ -62,23 +63,29 @@ function reducer(state: State, action: Action): State {
       };
     }
     case actionTypes.SET_VIEWING_FILE: {
+      let viewingFile: FileContent | null = null;
+
+      const files = state.files.map((file) => {
+        if (file.name === action.payload) {
+          viewingFile = file;
+          return {
+            ...file,
+            isViewing: true,
+          };
+        } else if (file.isViewing) {
+          return {
+            ...file,
+            isViewing: false,
+          };
+        }
+
+        return file;
+      });
+
       return {
         ...state,
-        files: state.files.map((file) => {
-          if (file.name === action.payload) {
-            return {
-              ...file,
-              isViewing: true,
-            };
-          } else if (file.isViewing) {
-            return {
-              ...file,
-              isViewing: false,
-            };
-          }
-
-          return file;
-        }),
+        files,
+        viewingFile,
       };
     }
     case actionTypes.LOAD_FROM_LOCAL_STORAGE: {

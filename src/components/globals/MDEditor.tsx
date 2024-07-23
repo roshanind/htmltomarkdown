@@ -121,13 +121,27 @@ const MDContainer = styled('div')(({ theme }) => ({
     width: '100%',
     borderRadius: 0,
     background: theme.palette.common.white,
+    zIndex: 1,
   },
   '.mdxeditor-diff-source-wrapper': {
     width: '100%',
     overflow: 'auto',
     flexGrow: 1,
-
     padding: 32,
+    position: 'relative',
+
+    '&:before': {
+      content: '""',
+      position: 'sticky',
+      top: 0,
+      left: 0,
+      right: 0,
+      boxShadow: theme.customShadows.pageShadow,
+      transform: 'translateY(-32px)',
+      margin: '0 -32px',
+      display: 'flex',
+      zIndex: 1,
+    },
   },
   '.mdxeditor-rich-text-editor, .mdxeditor-diff-editor, .mdxeditor-source-editor': {
     background: theme.palette.common.white,

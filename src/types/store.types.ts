@@ -3,6 +3,7 @@ import { FileContent } from './files.types';
 
 export type State = {
   files: FileContent[];
+  viewingFile: FileContent | null;
 };
 
 export type Action =

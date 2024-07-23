@@ -114,7 +114,13 @@ export default function FileList<T extends IFile>({
                   <Badge
                     invisible={!file.modified}
                     color="secondary"
-                    sx={{ '.MuiBadge-colorSecondary': { backgroundColor: theme.colors.yellow[700] } }}
+                    sx={{
+                      '.MuiBadge-colorSecondary': {
+                        backgroundColor: theme.palette.secondary.color1?.[700],
+                        top: 3,
+                        right: -8,
+                      },
+                    }}
                     variant="dot"
                     anchorOrigin={{
                       vertical: 'top',

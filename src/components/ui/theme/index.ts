@@ -1,26 +1,33 @@
-import { createTheme, PaletteOptions, alpha } from '@mui/material';
+import { createTheme, PaletteOptions, alpha, darken } from '@mui/material';
 import { grey, common, yellow, teal } from '@mui/material/colors';
 
 export const colors = {
   primary: {
+    lighter: alpha('#e0f2f1', 0.2),
     light: '#e0f2f1',
     main: '#26a69a',
     dark: '#00897b',
     darker: '#004d40',
+    darkest: darken('#004d40', 0.2),
+    ...teal,
   },
   secondary: {
     main: '#2979ff',
     100: '#ff7043',
+    color1: yellow,
   },
   grey,
   common,
-  yellow,
-  teal,
+};
+
+export const customShadows = {
+  pageShadow: `3px -3px 10px 6px  ${alpha(colors.primary.darkest, 0.3)}`,
 };
 
 export const theme = createTheme({
   colors,
   palette: colors as PaletteOptions,
+  customShadows,
   typography: {
     fontFamily: 'Urbanist, sans-serif',
     htmlFontSize: 17.7, // base / default font size is 17.7px. 14px in rem is 0.9rem so 16/17.7 = 0.9
@@ -94,7 +101,7 @@ export const theme = createTheme({
     MuiListItem: {
       styleOverrides: {
         root: {
-          borderBottom: `1px solid ${alpha(colors.teal[100], 0.5)}`,
+          borderBottom: `1px solid ${alpha(colors.primary[100], 0.5)}`,
           '&:last-child': {
             borderBottom: 'none',
           },
@@ -119,7 +126,7 @@ export const theme = createTheme({
             },
           },
           '&:hover': {
-            backgroundColor: colors.teal[100],
+            backgroundColor: colors.primary[100],
           },
           transition: 'background-color 0.3s',
         },
