@@ -14,8 +14,7 @@ export default function MDEditorHeader() {
       container
       p={2}
       sx={{
-        backgroundColor: (theme) => theme.palette.primary[100],
-        borderBottom: (theme) => `1px solid ${theme.palette.primary[300]}`,
+        backgroundColor: (theme) => theme.palette.grey[100],
       }}
     >
       <Grid item xs justifyContent="flex-start" display="flex" alignItems="center">
