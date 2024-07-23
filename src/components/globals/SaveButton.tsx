@@ -44,7 +44,12 @@ export default function SaveButton({ isSaveAll }: Props) {
       Save All
     </Button>
   ) : (
-    <Button disabled={!viewingFile || !viewingFile.modified} onClick={handleOnSave} startIcon={<SaveIcon />}>
+    <Button
+      color="secondary"
+      disabled={!viewingFile || !viewingFile.modified}
+      onClick={handleOnSave}
+      startIcon={<SaveIcon />}
+    >
       Save
     </Button>
   );

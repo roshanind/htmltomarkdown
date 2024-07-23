@@ -148,6 +148,7 @@ const MDContainer = styled('div')(({ theme }) => ({
     borderRadius: 16,
     overflow: 'hidden',
     minHeight: '100%',
+    padding: '0 32px',
 
     '& img': {
       maxWidth: '100%',

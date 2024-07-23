@@ -25,7 +25,7 @@ export default function MarkyEditorPage({}: Props) {
           <>
             <AutoSave />
             <SaveButton isSaveAll />
-            <ExportButton />
+            <ExportButton isMultiple />
           </>
         ),
       }}

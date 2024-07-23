@@ -4,6 +4,7 @@ import { Grid, Typography } from '@mui/material';
 import { useStore } from '@store';
 
 import SaveButton from './SaveButton';
+import ExportButton from './ExportButton';
 
 export default function MDEditorHeader() {
   const { files } = useStore();
@@ -28,8 +29,9 @@ export default function MDEditorHeader() {
           {viewingFile?.name}
         </Typography>
       </Grid>
-      <Grid item xs display="flex" alignItems="center" justifyContent="flex-end">
+      <Grid item xs display="flex" alignItems="center" justifyContent="flex-end" columnGap={1.5}>
         <SaveButton />
+        <ExportButton />
       </Grid>
     </Grid>
   );
