@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
 import TurndownService from 'turndown';
+import uuid from 'short-uuid';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Stack } from '@mui/material';
 
 import { useStore } from '@store/index';
-import { FileContent } from '@type/files.types';
+import { MDFile } from '@type/files.types';
 import { ReaderOutput, readFiles } from '@utils/readFiles';
 import { getFileNameAndExtension } from '@utils/index';
 import customRules from '@utils/turndownCustomRules';
 import FileUploadButton from '@ui/FileUploadButton';
-import FileList from '@ui/FileList';
-
-import FileViewAndModify from './FileViewAndModify';
+import FileList from '@ui/FileList/index';
 
 const turndownService = new TurndownService();
 turndownService.remove('script');
@@ -20,6 +19,7 @@ const parseFileObject = (file: File) => {
   const fileNameAndExt = getFileNameAndExtension(file.name);
 
   return {
+    id: uuid.generate(),
     name: fileNameAndExt.name,
     fileExtension: fileNameAndExt.extension,
     modified: false,
@@ -28,7 +28,7 @@ const parseFileObject = (file: File) => {
   };
 };
 
-type ProcessingFile = FileContent & { progress?: number };
+type ProcessingFile = MDFile & { progress?: number };
 
 /**
  * Component for uploading and handling files.
@@ -88,7 +88,7 @@ export const FileUploader = () => {
 
   const handleOnUpload = () => {
     files.forEach((file) => {
-      dispatch.addContent({
+      dispatch.addFile({
         ...file,
         originalContent: file.content,
         modified: true,
@@ -105,12 +105,6 @@ export const FileUploader = () => {
 
   const handleOnChange = (rawFiles: File[]) => {
     openFiles(rawFiles);
-  };
-
-  const handleOnCreate = (file: FileContent) => {
-    const markdown = turndownService.turndown(file.content);
-
-    dispatch.addContent({ name: file.name, fileExtension: 'md', originalContent: file.content, content: markdown });
   };
 
   const handleOnDelete = (fileName: string | undefined) => {
@@ -137,7 +131,6 @@ export const FileUploader = () => {
           <Button onClick={handleOnUpload}>Upload</Button>
         </DialogActions>
       </Dialog>
-      <FileViewAndModify isCreatable onCreate={handleOnCreate} />
     </Stack>
   );
 };

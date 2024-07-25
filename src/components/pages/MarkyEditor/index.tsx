@@ -8,6 +8,7 @@ import FileUploader from '@globals/FileUploader';
 import MDEditor from '@globals/MDEditor';
 import MDEditorHeader from '@globals/MDEditorHeader';
 import SaveButton from '@globals/SaveButton';
+import CreateFile from '@globals/CreateFile';
 import TwoColumnLayout from '@layouts/TwoColumn';
 import Message from '@ui/Message';
 
@@ -45,8 +46,9 @@ export default function MarkyEditorPage({}: Props) {
                 Files
               </Typography>
             </Grid>
-            <Grid item pr={1.3} justifyContent="flex-end">
+            <Grid item pr={1.3} justifyContent="flex-end" display="flex" columnGap={1.5}>
               <FileUploader />
+              <CreateFile />
             </Grid>
           </Grid>
           <Grid container p={2}>

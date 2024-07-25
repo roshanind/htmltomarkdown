@@ -1,4 +1,4 @@
-import { FileContent } from '@type/files.types';
+import { MDFile } from '@type/files.types';
 import { Action, State } from '../types/store.types';
 import * as actionTypes from './actionTypes';
 
@@ -15,9 +15,9 @@ export const initialState: State = {
  */
 function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case actionTypes.ADD_FILES: {
+    case actionTypes.ADD_FILE: {
       // check whether the file is already in the state
-      const fileExists = state.files?.some((file) => file.name === action.payload.name);
+      const fileExists = state.files?.some((file) => file.id === action.payload.id);
 
       // if the file is not in the state, add it
       if (!fileExists) {
@@ -30,19 +30,19 @@ function reducer(state: State, action: Action): State {
       // if the file is already in the state, update it
       return {
         ...state,
-        files: state.files.map((file) => (file.name === action.payload.name ? action.payload : file)),
+        files: state.files.map((file) => (file.id === action.payload.id ? action.payload : file)),
       };
     }
     case actionTypes.UPDATE_FILE: {
       const { files } = state;
-      const currentFileIndex = files.findIndex((file) => file.name === action.payload.name);
+      const currentFileIndex = files.findIndex((file) => file.id === action.payload.id);
       const currentFile = files[currentFileIndex];
 
-      const updatedFile: FileContent = {
+      const updatedFile: MDFile = {
         ...currentFile,
+        ...action.payload,
         lastEditedContent: currentFile.content,
-        content: action.payload.content,
-        modified: currentFile.content !== action.payload.content,
+        modified: currentFile.content !== action.payload.content || currentFile.name !== action.payload.name,
       };
 
       return {
@@ -53,7 +53,7 @@ function reducer(state: State, action: Action): State {
     case actionTypes.DELETE_FILE: {
       return {
         ...state,
-        files: state.files.filter((file) => file.name !== action.payload),
+        files: state.files.filter((file) => file.id !== action.payload),
       };
     }
     case actionTypes.BULK_UPDATE_FILES: {
@@ -63,10 +63,10 @@ function reducer(state: State, action: Action): State {
       };
     }
     case actionTypes.SET_VIEWING_FILE: {
-      let viewingFile: FileContent | null = null;
+      let viewingFile: MDFile | null = null;
 
       const files = state.files.map((file) => {
-        if (file.name === action.payload) {
+        if (file.id === action.payload) {
           viewingFile = file;
           return {
             ...file,

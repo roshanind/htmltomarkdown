@@ -1,4 +1,9 @@
-export type FileContent = {
+import { SUUID } from 'short-uuid';
+
+export type FileId = SUUID;
+
+export type MDFile = {
+  id: FileId;
   name: string;
   content: string;
   fileExtension?: string;

@@ -1,15 +1,15 @@
 import * as actionTypes from '@store/actionTypes';
-import { FileContent } from './files.types';
+import { FileId, MDFile } from './files.types';
 
 export type State = {
-  files: FileContent[];
-  viewingFile: FileContent | null;
+  files: MDFile[];
+  viewingFile: MDFile | null;
 };
 
 export type Action =
   | {
-      type: typeof actionTypes.ADD_FILES;
-      payload: FileContent;
+      type: typeof actionTypes.ADD_FILE;
+      payload: MDFile;
     }
   | {
       type: typeof actionTypes.DELETE_FILE;
@@ -17,17 +17,17 @@ export type Action =
     }
   | {
       type: typeof actionTypes.UPDATE_FILE;
-      payload: FileContent;
+      payload: Partial<MDFile>;
     }
   | {
       type: typeof actionTypes.SET_VIEWING_FILE;
-      payload: string | null;
+      payload: FileId | null;
     }
   | {
       type: typeof actionTypes.LOAD_FROM_LOCAL_STORAGE;
-      payload: FileContent[];
+      payload: MDFile[];
     }
   | {
       type: typeof actionTypes.BULK_UPDATE_FILES;
-      payload: FileContent[];
+      payload: MDFile[];
     };

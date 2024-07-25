@@ -27,6 +27,7 @@
     "@uiw/react-md-editor": "^4.0.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "short-uuid": "^5.2.0",
     "turndown": "^7.2.0",
     "turndown-plugin-gfm": "^1.0.2"
   },

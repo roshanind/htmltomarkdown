@@ -1,8 +1,10 @@
-import { FILE_SAVE_KEY } from '@constants/index';
-import { useStore } from '@store';
-import { FileContent } from '@type/files.types';
-import { useLocalStorage } from './useLocalStorage';
 import { useCallback } from 'react';
+
+import { useStore } from '@store';
+import { FILE_SAVE_KEY } from '@constants/index';
+import { MDFile } from '@type/files.types';
+
+import { useLocalStorage } from './useLocalStorage';
 
 /**
  * Custom hook for saving files.
@@ -10,7 +12,7 @@ import { useCallback } from 'react';
  */
 export const useSaveFile = () => {
   const { files, dispatch } = useStore();
-  const [savedFiles, setSavedFiles] = useLocalStorage<FileContent[]>(FILE_SAVE_KEY, files);
+  const [savedFiles, setSavedFiles] = useLocalStorage<MDFile[]>(FILE_SAVE_KEY, files);
 
   /**
    * Saves a single file.
@@ -19,22 +21,22 @@ export const useSaveFile = () => {
    * @param file - The file to be saved.
    */
   const saveFile = useCallback(
-    (file: FileContent) => {
+    (file: MDFile) => {
       // check if file exists in savedFiles
-      const fileExists = savedFiles.findIndex((f) => f.name === file.name);
+      const fileExists = savedFiles.findIndex((f) => f.id === file.id);
 
       if (fileExists !== -1) {
         const updatedFiles = [
           ...savedFiles.slice(0, fileExists),
-          { ...file, modified: false },
+          { ...file, modified: false, isViewing: false },
           ...savedFiles.slice(fileExists + 1),
         ];
         setSavedFiles(updatedFiles);
       } else {
-        setSavedFiles([...savedFiles, file]);
+        setSavedFiles([...savedFiles, { ...file, modified: false, isViewing: false }]);
       }
 
-      dispatch.updateContent(file);
+      dispatch.updateFile(file);
     },
     [savedFiles]
   );
@@ -43,8 +45,8 @@ export const useSaveFile = () => {
    * Saves multiple files.
    * @param files - The array of files to be saved.
    */
-  const saveAllFiles = (files: FileContent[]) => {
-    const updatedFiles = files.map((file) => ({ ...file, modified: false }));
+  const saveAllFiles = (files: MDFile[]) => {
+    const updatedFiles = files.map((file) => ({ ...file, modified: false, isViewing: false }));
 
     setSavedFiles(updatedFiles);
     dispatch.bulkUpdateFiles(updatedFiles);

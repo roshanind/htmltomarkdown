@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import { useStore } from '@store';
-import { FileContent } from '@type/files.types';
+import { FileId, MDFile } from '@type/files.types';
 import { FILE_SAVE_KEY } from '@constants/index';
 import { useLocalStorage } from '@hooks/useLocalStorage';
+import FileList from '@ui/FileList';
 
 import FileViewAndModify from './FileViewAndModify';
-import FileList from '@ui/FileList';
 
 /**
  * Renders a list of files with options to preview and delete.
@@ -14,36 +14,37 @@ import FileList from '@ui/FileList';
  */
 export default function FileNavigation() {
   const { files, dispatch } = useStore();
-  const [previewingFile, setPreviewingFile] = useState<FileContent | null>(null);
-  const [savedFiles, setSavedFiles] = useLocalStorage<FileContent[]>(FILE_SAVE_KEY, []);
+  const [previewingFile, setPreviewingFile] = useState<MDFile | null>(null);
+  const [savedFiles, setSavedFiles] = useLocalStorage<MDFile[]>(FILE_SAVE_KEY, []);
 
   useEffect(() => {
     dispatch.loadFromLocalStorage(savedFiles);
   }, []);
 
-  const handleOnPreviewClick = (file: FileContent | undefined) => {
+  const handleOnPreviewClick = (file: MDFile | undefined) => {
     if (file) {
       setPreviewingFile(file);
     }
   };
 
-  const handleOnDeleteClick = (fileName: string | undefined) => {
-    if (fileName) {
-      dispatch.deleteFile(fileName);
-      setSavedFiles(savedFiles.filter((file) => file.name !== fileName));
+  const handleOnDeleteClick = (fileId: FileId | undefined) => {
+    if (fileId) {
+      dispatch.deleteFile(fileId);
+      setSavedFiles(savedFiles.filter((file) => file.id !== fileId));
     }
   };
 
-  const handleOnSelectClick = (file: FileContent) => {
-    dispatch.setViewingFile(file.name);
+  const handleOnSelectClick = (file: MDFile) => {
+    dispatch.setViewingFile(file.id);
   };
 
   return (
     <>
-      <FileList<FileContent>
+      <FileList<MDFile>
         files={files}
         isShowDelete
         isShowPreview
+        isEditable
         onPreview={handleOnPreviewClick}
         onDelete={handleOnDeleteClick}
         onSelect={handleOnSelectClick}
@@ -51,7 +52,7 @@ export default function FileNavigation() {
 
       <FileViewAndModify
         isShow={!!previewingFile}
-        content={{ name: previewingFile?.name || '', content: previewingFile?.originalContent || '' }}
+        file={{ name: previewingFile?.name || '', content: previewingFile?.originalContent || '' }}
         onCancel={() => setPreviewingFile(null)}
       />
     </>

@@ -58,7 +58,7 @@ export default function MDEditor() {
         onChange={(content) => {
           if (!viewingFile) return;
 
-          dispatch.updateContent({ ...viewingFile, content });
+          dispatch.updateFile({ ...viewingFile, content });
         }}
         // onError={(error) => console.error(error)}
         plugins={[

@@ -1,35 +1,35 @@
-import { FileContent } from '@type/files.types';
+import { FileId, MDFile } from '@type/files.types';
 import * as actionTypes from './actionTypes';
 import { Dispatch } from 'react';
 import { Action } from '@type/store.types';
 
 export const actionsFactory = (dispatch: Dispatch<Action>) => ({
-  addContent: (content: FileContent) =>
+  addFile: (file: MDFile) =>
     dispatch({
-      type: actionTypes.ADD_FILES,
-      payload: content,
+      type: actionTypes.ADD_FILE,
+      payload: file,
     }),
-  updateContent: (content: FileContent) =>
+  updateFile: (file: Partial<MDFile>) =>
     dispatch({
       type: actionTypes.UPDATE_FILE,
-      payload: content,
+      payload: file,
     }),
-  deleteFile: (fileName: string) =>
+  deleteFile: (fileId: FileId) =>
     dispatch({
       type: actionTypes.DELETE_FILE,
-      payload: fileName,
+      payload: fileId,
     }),
-  bulkUpdateFiles: (files: FileContent[]) =>
+  bulkUpdateFiles: (files: MDFile[]) =>
     dispatch({
       type: actionTypes.BULK_UPDATE_FILES,
       payload: files,
     }),
-  setViewingFile: (fileName: string) =>
+  setViewingFile: (fileId: FileId) =>
     dispatch({
       type: actionTypes.SET_VIEWING_FILE,
-      payload: fileName,
+      payload: fileId,
     }),
-  loadFromLocalStorage: (files: FileContent[]) =>
+  loadFromLocalStorage: (files: MDFile[]) =>
     dispatch({
       type: actionTypes.LOAD_FROM_LOCAL_STORAGE,
       payload: files,

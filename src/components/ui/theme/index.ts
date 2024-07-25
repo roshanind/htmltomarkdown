@@ -115,7 +115,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 24,
-          '&.Mui-selected': {
+          '&.Mui-selected, &.Mui-selected.Mui-focusVisible': {
             backgroundColor: colors.primary.dark,
             color: colors.common.white,
             '&:hover': {
@@ -123,6 +123,20 @@ export const theme = createTheme({
             },
             '& + .MuiListItemSecondaryAction-root .MuiSvgIcon-root': {
               color: colors.common.white,
+            },
+            '& .MuiInputBase-root': {
+              color: colors.common.white,
+              backgroundColor: 'transparent',
+            },
+            '& + .MuiListItemSecondaryAction-root .Mui-disabled': {
+              opacity: 0.5,
+            },
+          },
+          '& .MuiInputBase-root': {
+            '& .MuiInputBase-input': {
+              height: '2.102em',
+              paddingTop: 0,
+              paddingBottom: 0,
             },
           },
           '&:hover': {

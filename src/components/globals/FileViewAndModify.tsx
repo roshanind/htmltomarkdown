@@ -1,88 +1,70 @@
 import { useEffect, useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from '@mui/material';
 
-import { FileContent } from '@type/files.types';
-import { CreateIcon } from '@ui/icons/CreateIcon';
+import { MDFile } from '@type/files.types';
 
 type Props = {
   isShow?: boolean;
-  isCreatable?: boolean;
-  content?: FileContent;
-  onCreate?: (file: FileContent) => void;
+  isEditable?: boolean;
+  file: Partial<MDFile>;
+  onSave?: (content: string) => void;
   onCancel?: () => void;
 };
 
 /**
- * Renders a component for viewing and modifying a file.
+ * Renders a dialog component for viewing and modifying a file.
  *
  * @param {Object} props - The component props.
- * @param {boolean} props.isShow - Flag indicating whether to show the file view and modify component.
- * @param {Function} props.onCreate - Function to be called when creating a new file.
- * @param {Object} props.content - The content of the file.
- * @param {boolean} props.isCreatable - Flag indicating whether the file is creatable.
- * @param {Function} props.onCancel - Function to be called when canceling the file creation.
- * @returns {JSX.Element} The rendered component.
+ * @param {boolean} props.isShow - Determines whether the dialog is visible or hidden.
+ * @param {Function} props.onSave - The function to be called when the file is saved.
+ * @param {Object} props.file - The file object containing the file details.
+ * @param {boolean} props.isEditable - Determines whether the file content is editable.
+ * @param {Function} props.onCancel - The function to be called when the dialog is canceled.
+ * @returns {JSX.Element} The rendered FileViewAndModify component.
  */
-export default function FileViewAndModify({ isShow = false, onCreate, content, isCreatable, onCancel }: Props) {
+export default function FileViewAndModify({ isShow = false, onSave, file, isEditable, onCancel }: Props) {
   const [isShowPreview, setIsShow] = useState(isShow);
-  const [fileContent, setFileContent] = useState<FileContent>({
-    name: content?.name || '',
-    content: content?.content || '',
-  });
-  const isValid = fileContent.name && fileContent.content;
+  const [fileContent, setFileContent] = useState(file?.content);
 
   useEffect(() => {
     setIsShow(isShow);
   }, [isShow]);
 
   useEffect(() => {
-    setFileContent({ name: content?.name || '', content: content?.content || '' });
-  }, [content]);
+    setFileContent(file?.content);
+  }, [file]);
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: string) => {
-    setFileContent((prev) => ({ ...prev, [field]: e.target.value }));
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFileContent(e.target.value);
   };
 
-  const handleOnCreate = () => {
-    onCreate?.(fileContent);
+  const handleOnSave = () => {
+    onSave?.(fileContent || '');
     setIsShow(false);
   };
 
   const handleOnCancel = () => {
     setIsShow(false);
-    setFileContent({ name: '', content: '' });
+    setFileContent('');
     onCancel?.();
   };
 
   return (
     <>
-      {isCreatable && (
-        <Button onClick={() => setIsShow(true)} startIcon={<CreateIcon />} color="secondary">
-          Create
-        </Button>
-      )}
       <Dialog open={isShowPreview} maxWidth="lg" fullWidth>
-        <DialogTitle>{isCreatable ? 'Create New File' : 'Preview File'}</DialogTitle>
+        <DialogTitle>{file.name}</DialogTitle>
 
         <DialogContent dividers>
           <Grid container rowGap={2}>
             <Grid item xs={12}>
               <TextField
-                value={fileContent.name}
-                label="File Name"
-                fullWidth
-                onChange={(e) => handleOnChange(e, 'name')}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                value={fileContent.content}
+                value={fileContent}
                 label="File Content"
                 multiline
                 fullWidth
                 minRows={4}
                 maxRows={10}
-                onChange={(e) => handleOnChange(e, 'content')}
+                onChange={handleOnChange}
               />
             </Grid>
           </Grid>
@@ -91,9 +73,9 @@ export default function FileViewAndModify({ isShow = false, onCreate, content, i
           <Button variant="outlined" onClick={handleOnCancel}>
             Cancel
           </Button>
-          {isCreatable && (
-            <Button variant="contained" onClick={handleOnCreate} disabled={!isValid}>
-              Create
+          {isEditable && (
+            <Button variant="contained" onClick={handleOnSave}>
+              Save
             </Button>
           )}
         </DialogActions>
