@@ -47,6 +47,13 @@ export default function FileListItem({
   const [editableContent, setEditableContent] = useState(content);
   const [isEditing, setIsEditing] = useState(false);
 
+  const handleOnApply = () => {
+    setIsEditing(false);
+    if (editableContent) {
+      onApply?.(id, editableContent);
+    }
+  };
+
   return (
     <ListItem
       disablePadding
@@ -61,17 +68,7 @@ export default function FileListItem({
           )}
           {isEditable && isEditing && (
             <Tooltip title="Save" placement="top" arrow>
-              <IconButton
-                color="primary"
-                disabled={!editableContent}
-                onClick={() => {
-                  setIsEditing(false);
-                  if (editableContent) {
-                    onApply?.(id, editableContent);
-                  }
-                }}
-                sx={{ p: 0.5 }}
-              >
+              <IconButton color="primary" disabled={!editableContent} onClick={handleOnApply} sx={{ p: 0.5 }}>
                 <SaveIcon />
               </IconButton>
             </Tooltip>
@@ -102,6 +99,13 @@ export default function FileListItem({
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
+            }}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') {
+                handleOnApply();
+              } else if (e.key === 'Escape') {
+                setIsEditing(false);
+              }
             }}
           />
         ) : (
